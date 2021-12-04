@@ -58,12 +58,12 @@ module SimpleTokenAuthentication
       qualified_const_defined?(dependency)
     end
   end
+end
 
-  ActiveSupport.on_load(:active_record) do
-    available_model_adapters = load_available_adapters SimpleTokenAuthentication.model_adapters
-    ensure_models_can_act_as_token_authenticatables available_model_adapters
+ActiveSupport.on_load(:active_record) do
+  available_model_adapters = SimpleTokenAuthentication.load_available_adapters SimpleTokenAuthentication.model_adapters
+  SimpleTokenAuthentication.ensure_models_can_act_as_token_authenticatables available_model_adapters
 
-    available_controller_adapters = load_available_adapters SimpleTokenAuthentication.controller_adapters
-    ensure_controllers_can_act_as_token_authentication_handlers available_controller_adapters
-  end
+  available_controller_adapters = SimpleTokenAuthentication.load_available_adapters SimpleTokenAuthentication.controller_adapters
+  SimpleTokenAuthentication.ensure_controllers_can_act_as_token_authentication_handlers available_controller_adapters
 end
